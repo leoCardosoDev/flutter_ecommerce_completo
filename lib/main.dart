@@ -1,4 +1,4 @@
-import 'package:ecommerce_completo/screens/base_screen.dart';
+import 'package:ecommerce_completo/screens/base/base_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

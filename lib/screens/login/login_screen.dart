@@ -1,6 +1,12 @@
+import 'package:ecommerce_completo/helpers/validators.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,50 +17,60 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 14),
-          child: ListView(
-            padding: EdgeInsets.all(16),
-            shrinkWrap: true,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(hintText: 'E-mail'),
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                validator: (email) {
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'Senha'),
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                obscureText: true,
-                validator: (password) {
-                  if (password.isEmpty || password.length < 6) {
-                    return 'Senha inválida';
-                  }
-                  return null;
-                },
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  child: Text('Esqueci minha senha'),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: EdgeInsets.all(16),
+              shrinkWrap: true,
+              children: [
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(hintText: 'E-mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  validator: (email) {
+                    if (!emailValid(email)) {
+                      return 'E-mail inválido';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              SizedBox(height: 15),
-              SizedBox(
-                height: 45,
-                child: RaisedButton(
-                  onPressed: () {},
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  child: Text('Entrar'),
+                SizedBox(height: 15),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(hintText: 'Senha'),
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  obscureText: true,
+                  validator: (password) {
+                    if (password.isEmpty || password.length < 6) {
+                      return 'Senha inválida';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: Text('Esqueci minha senha'),
+                  ),
+                ),
+                SizedBox(height: 15),
+                SizedBox(
+                  height: 45,
+                  child: RaisedButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {}
+                    },
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: Text('Entrar'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

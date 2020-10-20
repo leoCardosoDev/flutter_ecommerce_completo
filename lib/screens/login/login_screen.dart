@@ -1,5 +1,8 @@
 import 'package:ecommerce_completo/helpers/validators.dart';
+import 'package:ecommerce_completo/models/user/user.dart';
+import 'package:ecommerce_completo/models/user/user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -62,7 +65,14 @@ class LoginScreen extends StatelessWidget {
                   height: 45,
                   child: RaisedButton(
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {}
+                      if (_formKey.currentState.validate()) {
+                        context.read<UserManager>().signIn(
+                              User(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              ),
+                            );
+                      }
                     },
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
